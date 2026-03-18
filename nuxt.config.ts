@@ -18,5 +18,16 @@ export default defineNuxtConfig({
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap' }
       ]
     }
+  },
+  nitro: {
+    routeRules: {
+      '/api/**': { 
+        cors: true,
+        headers: { 
+          'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'access-control-allow-headers': '*'
+        } 
+      }
+    }
   }
 })

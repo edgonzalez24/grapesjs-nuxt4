@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const supabase = useSupabase()
   const { data, error } = await supabase
     .from('sites')
-    .select('id, name, slug, created_at')
+    .select('id, name, created_at')
     .eq('id', id)
     .maybeSingle()
 
