@@ -189,39 +189,70 @@ function registerBlocks(editor: any) {
       <rect x="4" y="34" width="14" height="2" rx="1" fill="#8892a4"/>
     </svg>`,
     content: `
-      <section style="
+      <section data-gjs-name="Banner Section" style="
         position: relative;
         width: 100%;
-        min-height: 480px;
+        height: 50vh;
+        margin: 0;
+        padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+        background-color: #1e1b4b;
         font-family: 'Inter', system-ui, sans-serif;
       ">
+        <!-- Dedicated Background Image Container -->
+        <div data-gjs-name="Banner Image" style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          background-image: url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        "></div>
+
+        <!-- Background Overlay -->
+        <div data-gjs-name="Banner Overlay" data-gjs-selectable="false" data-gjs-hoverable="false" style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 2;
+          background: linear-gradient(135deg, rgba(30, 27, 75, 0.7) 0%, rgba(49, 46, 129, 0.7) 50%, rgba(76, 29, 149, 0.7) 100%);
+          pointer-events: none;
+        "></div>
+
         <!-- Background decorative blobs -->
-        <div style="
+        <div data-gjs-selectable="false" data-gjs-hoverable="false" data-gjs-type="default" data-gjs-name="Decorative Blob" style="
           position: absolute; top: -60px; right: -60px;
           width: 280px; height: 280px; border-radius: 50%;
           background: rgba(139, 92, 246, 0.3);
           filter: blur(60px); pointer-events: none;
+          z-index: 2;
         "></div>
-        <div style="
+        <div data-gjs-selectable="false" data-gjs-hoverable="false" data-gjs-type="default" data-gjs-name="Decorative Blob" style="
           position: absolute; bottom: -80px; left: -40px;
           width: 240px; height: 240px; border-radius: 50%;
           background: rgba(99, 102, 241, 0.25);
           filter: blur(70px); pointer-events: none;
+          z-index: 2;
         "></div>
 
-        <!-- Content -->
-        <div data-gjs-droppable="false" style="
-          position: relative; z-index: 2;
+        <!-- Content Area -->
+        <div data-gjs-name="Banner Content" data-gjs-droppable="true" style="
+          position: relative; z-index: 3;
           text-align: center;
           padding: 60px 40px;
-          max-width: 700px;
+          max-width: 800px;
+          width: 100%;
         ">
-          <span style="
+          <span data-gjs-name="Badge" style="
             display: inline-block;
             font-size: 12px; font-weight: 600;
             letter-spacing: 0.14em; text-transform: uppercase;
@@ -232,45 +263,36 @@ function registerBlocks(editor: any) {
             margin-bottom: 24px;
           ">New Feature</span>
 
-          <h1 style="
+          <h1 data-gjs-name="Main Heading" style="
             font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 800;
-            line-height: 1.15;
+            line-height: 1.1;
             color: #ffffff;
-            margin: 0 0 20px;
-            letter-spacing: -0.02em;
-          ">Build Beautiful Pages<br/>Without Coding</h1>
+            margin: 0 0 24px;
+            letter-spacing: -0.03em;
+          ">Banner Section Experience</h1>
 
-          <p style="
+          <p data-gjs-name="Subheading" style="
             font-size: 18px;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.72);
-            margin: 0 0 36px;
-            max-width: 520px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+            margin: 0 0 40px;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-          ">Drag and drop components to create stunning landing pages in minutes. No technical knowledge required.</p>
+          ">Create high-impact sections that capture attention immediately. Now with a more compact 50vh height for better visibility.</p>
 
-          <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-            <a href="#" style="
+          <div data-gjs-name="Button Group" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+            <a data-gjs-name="Primary Button" href="#" style="
               display: inline-block;
               padding: 14px 30px;
-              background: linear-gradient(135deg, #7c3aed, #6d28d9);
-              color: white; text-decoration: none;
-              font-size: 15px; font-weight: 600;
-              border-radius: 8px;
-              box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
-              transition: opacity 0.2s;
-            ">Get Started Free</a>
-            <a href="#" style="
-              display: inline-block;
-              padding: 14px 30px;
-              background: rgba(255,255,255,0.08);
-              border: 1px solid rgba(255,255,255,0.2);
-              color: white; text-decoration: none;
-              font-size: 15px; font-weight: 600;
-              border-radius: 8px;
-            ">Watch Demo →</a>
+              background: #ffffff;
+              color: #1e1b4b; text-decoration: none;
+              font-size: 15px; font-weight: 700;
+              border-radius: 10px;
+              box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+              transition: transform 0.2s;
+            ">Get Started →</a>
           </div>
         </div>
       </section>
@@ -758,7 +780,7 @@ onMounted(async () => {
         {
           name: 'Dimension',
           open: false,
-          properties: ['width', 'min-height', 'max-width'],
+          properties: ['width', 'height', 'min-height', 'max-width'],
         },
         {
           name: 'Typography',
@@ -769,6 +791,17 @@ onMounted(async () => {
           name: 'Decorations',
           open: false,
           properties: ['background-color', 'border-radius', 'box-shadow', 'opacity'],
+        },
+        {
+          name: 'Background',
+          open: false,
+          properties: [
+            'background-image',
+            'background-position',
+            'background-size',
+            'background-repeat',
+            'background-attachment',
+          ],
         },
       ],
     },
@@ -814,6 +847,16 @@ onMounted(async () => {
 
   // Auto-save on every change (debounced)
   editor.on('update', scheduleSave)
+
+  // Reset body margin/padding for full-screen sections
+  editor.on('load', () => {
+    const body = editor.Canvas.getBody()
+    if (body) {
+      body.style.margin = '0'
+      body.style.padding = '0'
+      body.style.overflowX = 'hidden'
+    }
+  })
 })
 
 onBeforeUnmount(() => {
