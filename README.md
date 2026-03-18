@@ -25,6 +25,7 @@
 - ⚡ **Auto-save** — debounced 800ms save on every editor change
 - 👁️ **Live preview** — rendered from server-side content at `/:siteId`
 - 📱 **Responsive canvas** — Desktop / Tablet / Mobile device simulation
+- 🖼️ **Image Storage** — Upload assets directly to Supabase Storage with automatic URL generation
 
 ---
 
@@ -193,6 +194,13 @@ CREATE TABLE public.site_content (
 );
 ```
 
+### 3. Set up Storage (Images)
+
+Go to **Storage** in the Supabase Dashboard and:
+1. Create a new bucket named `images`.
+2. Set the bucket to **Public** (or configure appropriate RLS policies).
+3. The editor handles uploads to `uploads/:siteId/:filename` automatically.
+
 ### 3. Configure environment
 
 ```bash
@@ -220,7 +228,7 @@ npm run dev
 
 | Block | Category | Description |
 |---|---|---|
-| **Text & Banner** | Sections | Full-width hero with gradient background, headline, CTA buttons |
+| **Text & Banner** | Sections | 50% screen height hero with dedicated image container (opacity/position control), headline, and CTA |
 | **Multi Cols (2)** | Sections | Two-column feature layout with icon cards |
 | **Multi Cols (3)** | Sections | Three-column showcase layout |
 | **Text Content** | Basic | Minimal article-style text block |
