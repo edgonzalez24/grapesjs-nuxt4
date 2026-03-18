@@ -498,6 +498,88 @@ function registerBlocks(editor: any) {
   })
 }
 
+const DEFAULT_TEMPLATE = `
+  <section style="
+    width: 100%;
+    padding: 80px 40px;
+    background: #ffffff;
+    font-family: 'Inter', system-ui, sans-serif;
+  ">
+    <h2 style="
+      text-align: center;
+      font-size: 2.2rem; font-weight: 800;
+      color: #1e1b4b; margin: 0 0 16px;
+      letter-spacing: -0.02em;
+    ">Bienvenido a tu sitio</h2>
+    <p style="
+      text-align: center; color: #6b7280;
+      font-size: 18px; margin: 0 0 64px;
+      max-width: 600px; margin-left: auto; margin-right: auto;
+      line-height: 1.6;
+    ">Comienza editando este diseño predeterminado de dos columnas. Puedes arrastrar nuevos bloques desde el panel izquierdo.</p>
+
+    <div style="
+      display: flex;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    ">
+      <!-- Column 1 -->
+      <div style="
+        flex: 1; min-width: 300px;
+        padding: 40px;
+        background: #f8fbff;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        transition: transform 0.2s;
+      ">
+        <div style="
+          width: 56px; height: 56px; border-radius: 14px;
+          background: linear-gradient(135deg, #6c63ff, #a78bfa);
+          display: flex; align-items: center; justify-content: center;
+          font-size: 24px; margin-bottom: 24px;
+          box-shadow: 0 8px 16px rgba(108, 99, 255, 0.2);
+        ">✨</div>
+        <h3 style="
+          font-size: 1.4rem; font-weight: 700;
+          color: #1e1b4b; margin: 0 0 14px;
+        ">Diseño Flexible</h3>
+        <p style="
+          font-size: 16px; line-height: 1.7;
+          color: #4b5563; margin: 0;
+        ">Este es un bloque de columna predeterminado. Puedes cambiar los colores, fuentes y espaciado usando el panel de estilos a la derecha.</p>
+      </div>
+
+      <!-- Column 2 -->
+      <div style="
+        flex: 1; min-width: 300px;
+        padding: 40px;
+        background: #f8fbff;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        transition: transform 0.2s;
+      ">
+        <div style="
+          width: 56px; height: 56px; border-radius: 14px;
+          background: linear-gradient(135deg, #34d399, #059669);
+          display: flex; align-items: center; justify-content: center;
+          font-size: 24px; margin-bottom: 24px;
+          box-shadow: 0 8px 16px rgba(52, 211, 153, 0.2);
+        ">🚀</div>
+        <h3 style="
+          font-size: 1.4rem; font-weight: 700;
+          color: #1e1b4b; margin: 0 0 14px;
+        ">Listo para Publicar</h3>
+        <p style="
+          font-size: 16px; line-height: 1.7;
+          color: #4b5563; margin: 0;
+        ">Una vez que termines de editar, puedes previsualizar tu sitio y ver cómo se adapta a dispositivos móviles automáticamente.</p>
+      </div>
+    </div>
+  </section>
+`
+
 // ─── Editor Init ─────────────────────────────────────────
 onMounted(async () => {
   refreshSites()
@@ -583,7 +665,11 @@ onMounted(async () => {
   } else if (content.html) {
     editor.setComponents(content.html)
     if (content.css) editor.setStyle(content.css)
+  } else {
+    // New site: load default template
+    editor.setComponents(DEFAULT_TEMPLATE)
   }
+
 
   // Auto-save on every change (debounced)
   editor.on('update', scheduleSave)

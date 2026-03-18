@@ -87,8 +87,8 @@
 
           <div class="modal-actions">
             <button class="btn-cancel" @click="closeModal">Cancel</button>
-            <button class="btn-confirm" :disabled="!newName.trim()" @click="handleCreate">
-              Create Website
+            <button class="btn-confirm" :disabled="!newName.trim() || isCreating" @click="handleCreate">
+              {{ isCreating ? 'Creating...' : 'Create Website' }}
             </button>
           </div>
         </div>
@@ -105,8 +105,10 @@
             All content will be permanently removed.
           </p>
           <div class="modal-actions">
-            <button class="btn-cancel" @click="deleteTarget = null">Cancel</button>
-            <button class="btn-danger" @click="handleDelete">Delete</button>
+            <button class="btn-cancel" :disabled="isDeleting" @click="deleteTarget = null">Cancel</button>
+            <button class="btn-danger" :disabled="isDeleting" @click="handleDelete">
+              {{ isDeleting ? 'Deleting...' : 'Delete' }}
+            </button>
           </div>
         </div>
       </div>
@@ -132,10 +134,15 @@ const slugPreview = computed(() => {
 
 onMounted(async () => await refresh())
 
+const isCreating = ref(false)
+const isDeleting = ref(false)
+
 watch(showModal, async (val) => {
   if (val) {
     await nextTick()
     nameInput.value?.focus()
+  } else {
+    isCreating.value = false
   }
 })
 
@@ -145,10 +152,16 @@ function closeModal() {
 }
 
 async function handleCreate() {
-  if (!newName.value.trim()) return
-  const site = await createSite(newName.value)
-  closeModal()
-  router.push(`/${site.id}/edit`)
+  if (!newName.value.trim() || isCreating.value) return
+  try {
+    isCreating.value = true
+    const site = await createSite(newName.value)
+    closeModal()
+    router.push(`/${site.id}/edit`)
+  } catch (e) {
+    console.error('Failed to create site:', e)
+    isCreating.value = false
+  }
 }
 
 function confirmDelete(site: Website) {
@@ -156,9 +169,16 @@ function confirmDelete(site: Website) {
 }
 
 async function handleDelete() {
-  if (!deleteTarget.value) return
-  await deleteSite(deleteTarget.value.id)
-  deleteTarget.value = null
+  if (!deleteTarget.value || isDeleting.value) return
+  try {
+    isDeleting.value = true
+    await deleteSite(deleteTarget.value.id)
+    deleteTarget.value = null
+  } catch (e) {
+    console.error('Failed to delete site:', e)
+  } finally {
+    isDeleting.value = false
+  }
 }
 
 function formatDate(iso: string) {
