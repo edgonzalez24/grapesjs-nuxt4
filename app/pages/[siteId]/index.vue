@@ -34,9 +34,7 @@
         <button class="btn-primary" @click="goEdit">Open Editor</button>
       </div>
 
-      <ClientOnly>
-        <div v-if="hasContent" class="preview-content" v-html="previewHtml" />
-      </ClientOnly>
+      <div v-if="hasContent" class="preview-content" v-html="previewHtml" />
     </div>
   </div>
 </template>
@@ -46,22 +44,32 @@ const route = useRoute()
 const router = useRouter()
 const siteId = computed(() => route.params.siteId as string)
 
-const { getSite, refresh } = useWebsites()
+// SSR: fetch site content on the server
+const { data: content } = await useAsyncData(
+  `site-content-${siteId.value}`,
+  () => $fetch<{ html: string; css: string; gjson: unknown }>(`/api/sites/${siteId.value}/content`),
+  { default: () => ({ html: '', css: '', gjson: null }) }
+)
 
-const previewHtml = ref('')
+// Also fetch site metadata (name) server-side
+const { data: site } = await useAsyncData(
+  `site-meta-${siteId.value}`,
+  () => $fetch<{ id: string; name: string }>(`/api/sites/${siteId.value}`).catch(() => null)
+)
+
+const siteName = computed(() => site.value?.name ?? siteId.value)
+
+const previewHtml = computed(() => {
+  if (!content.value?.html) return ''
+  return `<style>${content.value.css}</style>${content.value.html}`
+})
+
 const hasContent = computed(() => previewHtml.value.trim().length > 0)
-const siteName = computed(() => getSite(siteId.value)?.name ?? siteId.value)
 
-onMounted(async () => {
-  await refresh()
-  try {
-    const content = await $fetch<{ html: string; css: string }>(`/api/sites/${siteId.value}/content`)
-    if (content.html) {
-      previewHtml.value = `<style>${content.css}</style>${content.html}`
-    }
-  } catch {
-    previewHtml.value = ''
-  }
+// Dynamic SEO meta
+useSeoMeta({
+  title: () => siteName.value,
+  description: () => `Preview of ${siteName.value}`,
 })
 
 function goEdit() {
