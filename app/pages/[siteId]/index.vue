@@ -67,9 +67,22 @@ const previewHtml = computed(() => {
 const hasContent = computed(() => previewHtml.value.trim().length > 0)
 
 // Dynamic SEO meta
+const url = useRequestURL()
+
 useSeoMeta({
   title: () => siteName.value,
-  description: () => `Preview of ${siteName.value}`,
+  description: () => `Web preview for ${siteName.value}. Created with GrapesJS and Nuxt 4.`,
+  // OG
+  ogTitle: () => siteName.value,
+  ogDescription: () => `Web preview for ${siteName.value}. Created with GrapesJS and Nuxt 4.`,
+  ogImage: `${url.origin}/og-image.png`,
+  ogUrl: () => url.href,
+  ogType: 'website',
+  // Twitter
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => siteName.value,
+  twitterDescription: () => `Web preview for ${siteName.value}. Created with GrapesJS and Nuxt 4.`,
+  twitterImage: `${url.origin}/og-image.png`,
 })
 
 function goEdit() {
