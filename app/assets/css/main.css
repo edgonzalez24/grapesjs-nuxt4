@@ -1,0 +1,116 @@
+/* =========================================
+   GLOBAL STYLES - GrapesJS Page Builder POC
+   ========================================= */
+
+@import 'grapesjs/dist/css/grapes.min.css';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-bg: #0f1117;
+  --color-surface: #1a1d27;
+  --color-surface-2: #242736;
+  --color-border: #2e3248;
+  --color-accent: #6c63ff;
+  --color-accent-hover: #8b84ff;
+  --color-text: #e2e8f0;
+  --color-text-muted: #8892a4;
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+html, body {
+  height: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- GrapesJS Theme Overrides ---- */
+.gjs-one-bg {
+  background-color: var(--color-surface) !important;
+}
+
+.gjs-two-bg {
+  background-color: var(--color-surface-2) !important;
+}
+
+.gjs-three-bg {
+  background-color: #2d3250 !important;
+}
+
+.gjs-four-bg {
+  background-color: var(--color-accent) !important;
+}
+
+.gjs-pn-panels {
+  border-right: 1px solid var(--color-border);
+}
+
+.gjs-block {
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius) !important;
+  background: var(--color-surface-2) !important;
+  color: var(--color-text) !important;
+  transition: all 0.2s ease !important;
+}
+
+.gjs-block:hover {
+  border-color: var(--color-accent) !important;
+  background: #2d3250 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.25) !important;
+}
+
+.gjs-block__media {
+  font-size: 32px !important;
+  margin-bottom: 6px;
+}
+
+.gjs-title {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text-muted) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+.gjs-pn-btn {
+  color: var(--color-text-muted) !important;
+  transition: color 0.2s ease !important;
+}
+
+.gjs-pn-btn:hover,
+.gjs-pn-btn.gjs-pn-active {
+  color: var(--color-accent) !important;
+}
+
+.gjs-toolbar {
+  background: var(--color-accent) !important;
+  border-radius: var(--radius) !important;
+}
+
+.gjs-selected {
+  outline: 2px solid var(--color-accent) !important;
+  outline-offset: 2px !important;
+}
+
+.gjs-cv-canvas {
+  background: #f8f9fc !important;
+}
+
+.gjs-frame-wrapper {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}

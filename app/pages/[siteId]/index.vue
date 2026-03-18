@@ -1,0 +1,223 @@
+<template>
+  <div class="preview-page">
+    <!-- Toolbar -->
+    <div class="preview-toolbar">
+      <div class="toolbar-left">
+        <span class="logo-icon">🎨</span>
+        <span class="toolbar-title">{{ siteName }}</span>
+        <span class="preview-badge">LIVE</span>
+      </div>
+      <div class="toolbar-right">
+        <button class="btn-edit" @click="goEdit">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+          Edit
+        </button>
+        <button class="btn-back" @click="goHome">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          Dashboard
+        </button>
+      </div>
+    </div>
+
+    <!-- Canvas -->
+    <div class="preview-canvas">
+      <div v-if="!hasContent" class="empty-state">
+        <div class="empty-icon">📄</div>
+        <h2>No content yet</h2>
+        <p>Open the editor and add some blocks to your page.</p>
+        <button class="btn-primary" @click="goEdit">Open Editor</button>
+      </div>
+
+      <ClientOnly>
+        <div v-if="hasContent" class="preview-content" v-html="previewHtml" />
+      </ClientOnly>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+const route = useRoute()
+const router = useRouter()
+const siteId = computed(() => route.params.siteId as string)
+
+const { getSite, refresh } = useWebsites()
+
+const previewHtml = ref('')
+const hasContent = computed(() => previewHtml.value.trim().length > 0)
+const siteName = computed(() => getSite(siteId.value)?.name ?? siteId.value)
+
+onMounted(async () => {
+  await refresh()
+  try {
+    const content = await $fetch<{ html: string; css: string }>(`/api/sites/${siteId.value}/content`)
+    if (content.html) {
+      previewHtml.value = `<style>${content.css}</style>${content.html}`
+    }
+  } catch {
+    previewHtml.value = ''
+  }
+})
+
+function goEdit() {
+  router.push(`/${siteId.value}/edit`)
+}
+
+function goHome() {
+  router.push('/')
+}
+</script>
+
+<style scoped>
+.preview-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f0f2f8;
+}
+
+/* Toolbar */
+.preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 56px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  font-size: 22px;
+  filter: drop-shadow(0 0 8px rgba(108, 99, 255, 0.5));
+}
+
+.toolbar-title {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.preview-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--color-success);
+  padding: 2px 8px;
+  border-radius: 100px;
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.toolbar-right {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-edit,
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  font-size: 13px;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-edit:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: white;
+}
+
+.btn-back:hover {
+  background: var(--color-surface-2);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Canvas */
+.preview-canvas {
+  flex: 1;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preview-content {
+  width: 100%;
+  max-width: 1200px;
+  background: white;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--color-text-muted);
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 8px;
+  filter: grayscale(0.5);
+}
+
+.empty-state h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.empty-state p {
+  font-size: 15px;
+  max-width: 320px;
+}
+
+.btn-primary {
+  margin-top: 8px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, var(--color-accent), #a78bfa);
+  border: none;
+  border-radius: var(--radius);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+}
+</style>
