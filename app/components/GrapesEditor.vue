@@ -109,6 +109,7 @@
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useSupabase } from '~/utils/supabase'
 
 const props = defineProps<{ siteId: string }>()
 
@@ -117,6 +118,7 @@ const activeRightTab = ref<'styles' | 'traits' | 'layers'>('styles')
 
 // Resolve site name from the websites composable
 const { getSite, refresh: refreshSites } = useWebsites()
+const supabase = useSupabase()
 const siteName = computed(() => getSite(props.siteId)?.name ?? props.siteId)
 
 let editor: any = null
@@ -496,6 +498,110 @@ function registerBlocks(editor: any) {
       </section>
     `
   })
+
+  // ── 5. Image & Text ────────────────────────────────────
+  bm.add('image-text', {
+    label: 'Image & Text',
+    category: 'Sections',
+    media: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="40" height="40" rx="6" fill="#ec4899" opacity="0.1"/>
+      <rect x="4" y="10" width="14" height="20" rx="2" fill="#ec4899" opacity="0.5"/>
+      <rect x="22" y="12" width="14" height="2" rx="1" fill="#ec4899" opacity="0.8"/>
+      <rect x="22" y="18" width="14" height="2" rx="1" fill="#8892a4" opacity="0.5"/>
+      <rect x="22" y="24" width="10" height="2" rx="1" fill="#8892a4" opacity="0.5"/>
+    </svg>`,
+    content: `
+      <section style="
+        width: 100%; padding: 80px 40px;
+        background: #ffffff;
+        font-family: 'Inter', system-ui, sans-serif;
+      ">
+        <div style="
+          display: flex;
+          align-items: center;
+          gap: 60px;
+          max-width: 1100px;
+          margin: 0 auto;
+          flex-wrap: wrap;
+        ">
+          <!-- Image Column -->
+          <div style="flex: 1; min-width: 300px;">
+            <div style="
+              width: 100%; height: 400px;
+              background: #f3f4f6;
+              border-radius: 20px;
+              overflow: hidden;
+              box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+              display: flex; align-items: center; justify-content: center;
+            ">
+              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop" 
+                   alt="Modern Workspace" 
+                   style="width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+          </div>
+
+          <!-- Text Column -->
+          <div style="flex: 1; min-width: 300px;">
+            <div style="
+              padding: 10px 0;
+            ">
+              <span style="
+                display: inline-block;
+                color: #ec4899;
+                font-weight: 700;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                margin-bottom: 20px;
+              ">Premium Design</span>
+              
+              <h2 style="
+                font-size: clamp(2rem, 4vw, 2.5rem);
+                font-weight: 800;
+                color: #111827;
+                line-height: 1.2;
+                margin: 0 0 24px;
+                letter-spacing: -0.02em;
+              ">Elevate Your Visual Experience</h2>
+              
+              <p style="
+                font-size: 18px;
+                line-height: 1.7;
+                color: #4b5563;
+                margin-bottom: 32px;
+              ">Create a lasting impression with our beautifully crafted sections. Our design philosophy focuses on clarity, elegance, and user engagement.</p>
+              
+              <ul style="list-style: none; padding: 0; margin-bottom: 36px;">
+                <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-weight: 500; color: #374151;">
+                  <span style="display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: rgba(236,72,153,0.1); color: #ec4899; border-radius: 50%; font-size: 14px;">✓</span>
+                  Mobile Responsive Layouts
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-weight: 500; color: #374151;">
+                  <span style="display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: rgba(236,72,153,0.1); color: #ec4899; border-radius: 50%; font-size: 14px;">✓</span>
+                  Customizable Styling Options
+                </li>
+                <li style="display: flex; align-items: center; gap: 12px; font-weight: 500; color: #374151;">
+                  <span style="display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: rgba(236,72,153,0.1); color: #ec4899; border-radius: 50%; font-size: 14px;">✓</span>
+                  Optimized for Fast Loading
+                </li>
+              </ul>
+              
+              <a href="#" style="
+                display: inline-block;
+                padding: 12px 28px;
+                background: #111827;
+                color: white;
+                text-decoration: none;
+                font-weight: 600;
+                border-radius: 10px;
+                transition: transform 0.2s;
+              ">Explore More</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    `
+  })
 }
 
 const DEFAULT_TEMPLATE = `
@@ -593,6 +699,41 @@ onMounted(async () => {
 
     // Built-in panel slots → remapped to our DOM nodes
     panels: { defaults: [] },
+
+    assetManager: {
+      upload: 'https://none', // Set to a string to enable upload button UI, but our custom uploadFile handles the logic
+      async uploadFile(e: any, assetManager: any) {
+        const files = e.dataTransfer ? e.dataTransfer.files : e.target.files
+        const bucket = 'images'
+
+        for (const file of files) {
+          try {
+            const fileExt = file.name.split('.').pop()
+            const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`
+            const filePath = `uploads/${props.siteId}/${fileName}`
+
+            const { data, error } = await supabase.storage
+              .from(bucket)
+              .upload(filePath, file)
+
+            if (error) {
+              console.error('Error uploading to Supabase:', error)
+              alert(`Error uploading ${file.name}: ${error.message}`)
+              continue
+            }
+
+            const { data: { publicUrl } } = supabase.storage
+              .from(bucket)
+              .getPublicUrl(data.path)
+
+            editor.Assets.add(publicUrl)
+          } catch (err: any) {
+            console.error('Unexpected upload error:', err)
+            alert(`Unexpected error uploading ${file.name}`)
+          }
+        }
+      }
+    },
 
     blockManager: {
       appendTo: '#gjs-blocks',

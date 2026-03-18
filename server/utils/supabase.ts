@@ -2,5 +2,5 @@ import { createClient } from '@supabase/supabase-js'
 
 export function useSupabase() {
   const config = useRuntimeConfig()
-  return createClient(config.supabaseUrl, config.supabaseKey)
+  return createClient(config.public.supabaseUrl as string, config.public.supabaseKey as string)
 }

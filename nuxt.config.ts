@@ -4,8 +4,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
-    supabaseUrl: process.env.SUPABASE_URL ?? '',
-    supabaseKey: process.env.SUPABASE_KEY ?? '',
+    public: {
+      supabaseUrl: process.env.SUPABASE_URL ?? '',
+      supabaseKey: process.env.SUPABASE_KEY ?? '',
+    }
   },
   app: {
     head: {
