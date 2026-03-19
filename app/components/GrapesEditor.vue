@@ -29,7 +29,36 @@
           </svg>
           Redo
         </button>
+
         <div class="divider-v" />
+
+        <div class="device-switcher">
+          <button class="device-btn" :class="{ active: currentDevice === 'desktop' }" @click="setDevice('desktop')"
+            title="Desktop View">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+          </button>
+          <button class="device-btn" :class="{ active: currentDevice === 'tablet' }" @click="setDevice('tablet')"
+            title="Tablet View">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
+              <line x1="12" y1="18" x2="12.01" y2="18" />
+            </svg>
+          </button>
+          <button class="device-btn" :class="{ active: currentDevice === 'mobile' }" @click="setDevice('mobile')"
+            title="Mobile View">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+              <line x1="12" y1="18" x2="12.01" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="divider-v" />
+
         <button class="action-btn" @click="clearCanvas">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="3 6 5 6 21 6" />
@@ -115,6 +144,13 @@ const props = defineProps<{ siteId: string }>()
 
 const router = useRouter()
 const activeRightTab = ref<'styles' | 'traits' | 'layers'>('styles')
+const currentDevice = ref('desktop')
+
+const setDevice = (device: string) => {
+  if (!editor) return
+  currentDevice.value = device
+  editor.setDevice(device)
+}
 
 // Resolve site name from the websites composable
 const { getSite, refresh: refreshSites } = useWebsites()
@@ -228,67 +264,52 @@ function registerBlocks(editor: any) {
           pointer-events: none;
         "></div>
 
-        <!-- Background decorative blobs -->
-        <div data-gjs-selectable="false" data-gjs-hoverable="false" data-gjs-type="default" data-gjs-name="Decorative Blob" style="
-          position: absolute; top: -60px; right: -60px;
-          width: 280px; height: 280px; border-radius: 50%;
-          background: rgba(139, 92, 246, 0.3);
-          filter: blur(60px); pointer-events: none;
-          z-index: 2;
-        "></div>
-        <div data-gjs-selectable="false" data-gjs-hoverable="false" data-gjs-type="default" data-gjs-name="Decorative Blob" style="
-          position: absolute; bottom: -80px; left: -40px;
-          width: 240px; height: 240px; border-radius: 50%;
-          background: rgba(99, 102, 241, 0.25);
-          filter: blur(70px); pointer-events: none;
-          z-index: 2;
-        "></div>
-
         <!-- Content Area -->
         <div data-gjs-name="Banner Content" data-gjs-droppable="true" style="
           position: relative; z-index: 3;
           text-align: center;
-          padding: 60px 40px;
+          padding: clamp(30px, 8vw, 60px) clamp(20px, 5vw, 40px);
           max-width: 800px;
+          margin: 0 auto;
           width: 100%;
         ">
           <span data-gjs-name="Badge" style="
             display: inline-block;
-            font-size: 12px; font-weight: 600;
+            font-size: 11px; font-weight: 600;
             letter-spacing: 0.14em; text-transform: uppercase;
             color: #a78bfa;
             background: rgba(167, 139, 250, 0.12);
             border: 1px solid rgba(167, 139, 250, 0.3);
             border-radius: 100px; padding: 4px 14px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
           ">New Feature</span>
 
           <h1 data-gjs-name="Main Heading" style="
-            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
             font-weight: 800;
             line-height: 1.1;
             color: #ffffff;
-            margin: 0 0 24px;
+            margin: 0 0 20px;
             letter-spacing: -0.03em;
           ">Banner Section Experience</h1>
 
           <p data-gjs-name="Subheading" style="
-            font-size: 18px;
+            font-size: clamp(15px, 2vw, 18px);
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.85);
-            margin: 0 0 40px;
+            margin: 0 0 32px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
           ">Create high-impact sections that capture attention immediately. Now with a more compact 50vh height for better visibility.</p>
 
-          <div data-gjs-name="Button Group" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <div data-gjs-name="Button Group" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
             <a data-gjs-name="Primary Button" href="#" style="
               display: inline-block;
-              padding: 14px 30px;
+              padding: 12px 28px;
               background: #ffffff;
               color: #1e1b4b; text-decoration: none;
-              font-size: 15px; font-weight: 700;
+              font-size: 14px; font-weight: 700;
               border-radius: 10px;
               box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
               transition: transform 0.2s;
@@ -311,32 +332,32 @@ function registerBlocks(editor: any) {
     content: `
       <section style="
         width: 100%;
-        padding: 80px 40px;
+        padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 40px);
         background: #ffffff;
         font-family: 'Inter', system-ui, sans-serif;
       ">
         <h2 style="
           text-align: center;
-          font-size: 2rem; font-weight: 700;
+          font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700;
           color: #1e1b4b; margin: 0 0 12px;
           letter-spacing: -0.01em;
         ">Two Column Layout</h2>
         <p style="
           text-align: center; color: #6b7280;
-          font-size: 16px; margin: 0 0 56px;
+          font-size: clamp(14px, 2vw, 16px); margin: 0 0 48px;
         ">Edit this section to add your own content</p>
 
         <div style="
           display: flex;
-          gap: 32px;
+          gap: clamp(16px, 3vw, 32px);
           max-width: 1100px;
           margin: 0 auto;
           flex-wrap: wrap;
         ">
           <!-- Column 1 -->
           <div style="
-            flex: 1; min-width: 280px;
-            padding: 36px;
+            flex: 1; min-width: 260px;
+            padding: clamp(24px, 4vw, 36px);
             background: #f8f9fc;
             border-radius: 12px;
             border: 1px solid #e5e7eb;
@@ -398,39 +419,39 @@ function registerBlocks(editor: any) {
     content: `
       <section style="
         width: 100%;
-        padding: 80px 40px;
+        padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 40px);
         background: linear-gradient(180deg, #fafbff 0%, #f0f2f8 100%);
         font-family: 'Inter', system-ui, sans-serif;
       ">
         <h2 style="
           text-align: center;
-          font-size: 2rem; font-weight: 700;
+          font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700;
           color: #1e1b4b; margin: 0 0 12px;
           letter-spacing: -0.01em;
         ">Three Column Layout</h2>
         <p style="
           text-align: center; color: #6b7280;
-          font-size: 16px; margin: 0 0 56px;
+          font-size: clamp(14px, 2vw, 16px); margin: 0 0 48px;
         ">Showcase your features, team, or services in three equal columns</p>
 
         <div style="
           display: flex;
-          gap: 24px;
+          gap: 20px;
           max-width: 1100px;
           margin: 0 auto;
           flex-wrap: wrap;
         ">
           <!-- Column 1 -->
           <div style="
-            flex: 1; min-width: 220px;
-            padding: 32px 28px;
+            flex: 1; min-width: 240px;
+            padding: clamp(24px, 4vw, 32px) 24px;
             background: white;
             border-radius: 12px;
             border: 1px solid #e5e7eb;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             text-align: center;
           ">
-            <div style="font-size: 36px; margin-bottom: 16px;">🎯</div>
+            <div style="font-size: clamp(28px, 4vw, 36px); margin-bottom: 16px;">🎯</div>
             <h3 style="
               font-size: 1.1rem; font-weight: 700;
               color: #1e1b4b; margin: 0 0 10px;
@@ -443,14 +464,14 @@ function registerBlocks(editor: any) {
 
           <!-- Column 2 -->
           <div style="
-            flex: 1; min-width: 220px;
-            padding: 32px 28px;
+            flex: 1; min-width: 240px;
+            padding: clamp(24px, 4vw, 32px) 24px;
             background: linear-gradient(135deg, #6c63ff, #7c3aed);
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(108, 99, 255, 0.35);
             text-align: center;
           ">
-            <div style="font-size: 36px; margin-bottom: 16px;">⚡</div>
+            <div style="font-size: clamp(28px, 4vw, 36px); margin-bottom: 16px;">⚡</div>
             <h3 style="
               font-size: 1.1rem; font-weight: 700;
               color: white; margin: 0 0 10px;
@@ -463,15 +484,15 @@ function registerBlocks(editor: any) {
 
           <!-- Column 3 -->
           <div style="
-            flex: 1; min-width: 220px;
-            padding: 32px 28px;
+            flex: 1; min-width: 240px;
+            padding: clamp(24px, 4vw, 32px) 24px;
             background: white;
             border-radius: 12px;
             border: 1px solid #e5e7eb;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             text-align: center;
           ">
-            <div style="font-size: 36px; margin-bottom: 16px;">🔒</div>
+            <div style="font-size: clamp(28px, 4vw, 36px); margin-bottom: 16px;">🔒</div>
             <h3 style="
               font-size: 1.1rem; font-weight: 700;
               color: #1e1b4b; margin: 0 0 10px;
@@ -499,24 +520,20 @@ function registerBlocks(editor: any) {
     </svg>`,
     content: `
       <section style="
-        width: 100%; padding: 60px 40px;
+        width: 100%; padding: clamp(30px, 8vw, 60px) clamp(20px, 5vw, 40px);
         background: white;
         font-family: 'Inter', system-ui, sans-serif;
         max-width: 820px; margin: 0 auto;
       ">
         <h2 style="
-          font-size: 1.8rem; font-weight: 700;
+          font-size: clamp(1.4rem, 4vw, 1.8rem); font-weight: 700;
           color: #1e1b4b; margin: 0 0 16px;
           letter-spacing: -0.01em;
         ">Your Title Goes Here</h2>
         <p style="
-          font-size: 16px; line-height: 1.8;
+          font-size: clamp(14px, 2vw, 16px); line-height: 1.8;
           color: #4b5563; margin: 0 0 20px;
         ">This is a paragraph of text. Click to edit and type your content directly. You can also use the style panel on the right to customize fonts, colors, and spacing.</p>
-        <p style="
-          font-size: 16px; line-height: 1.8;
-          color: #4b5563; margin: 0;
-        ">Add another paragraph here for more detailed content.</p>
       </section>
     `
   })
@@ -534,26 +551,25 @@ function registerBlocks(editor: any) {
     </svg>`,
     content: `
       <section style="
-        width: 100%; padding: 80px 40px;
+        width: 100%; padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 40px);
         background: #ffffff;
         font-family: 'Inter', system-ui, sans-serif;
       ">
         <div style="
           display: flex;
           align-items: center;
-          gap: 60px;
+          gap: clamp(24px, 5vw, 60px);
           max-width: 1100px;
           margin: 0 auto;
           flex-wrap: wrap;
         ">
           <!-- Image Column -->
-          <div style="flex: 1; min-width: 300px;">
+          <div style="flex: 1; min-width: 280px;">
             <div style="
-              width: 100%; height: 400px;
+              width: 100%; height: clamp(280px, 40vh, 400px);
               background: #f3f4f6;
               border-radius: 20px;
               overflow: hidden;
-              box-shadow: 0 10px 30px rgba(0,0,0,0.08);
               display: flex; align-items: center; justify-content: center;
             ">
               <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop" 
@@ -563,7 +579,7 @@ function registerBlocks(editor: any) {
           </div>
 
           <!-- Text Column -->
-          <div style="flex: 1; min-width: 300px;">
+          <div style="flex: 1; min-width: 280px;">
             <div style="
               padding: 10px 0;
             ">
@@ -571,52 +587,44 @@ function registerBlocks(editor: any) {
                 display: inline-block;
                 color: #ec4899;
                 font-weight: 700;
-                font-size: 11px;
+                font-size: 10px;
                 text-transform: uppercase;
                 letter-spacing: 0.1em;
-                margin-bottom: 20px;
+                margin-bottom: 16px;
               ">Premium Design</span>
               
               <h2 style="
-                font-size: clamp(2rem, 4vw, 2.5rem);
+                font-size: clamp(1.6rem, 4vw, 2.5rem);
                 font-weight: 800;
                 color: #111827;
                 line-height: 1.2;
-                margin: 0 0 24px;
+                margin: 0 0 20px;
                 letter-spacing: -0.02em;
               ">Elevate Your Visual Experience</h2>
               
               <p style="
-                font-size: 18px;
+                font-size: clamp(15px, 2vw, 18px);
                 line-height: 1.7;
                 color: #4b5563;
-                margin-bottom: 32px;
+                margin-bottom: 28px;
               ">Create a lasting impression with our beautifully crafted sections. Our design philosophy focuses on clarity, elegance, and user engagement.</p>
               
-              <ul style="list-style: none; padding: 0; margin-bottom: 36px;">
-                <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-weight: 500; color: #374151;">
-                  <span style="display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: rgba(236,72,153,0.1); color: #ec4899; border-radius: 50%; font-size: 14px;">✓</span>
+              <ul style="list-style: none; padding: 0; margin-bottom: 28px;">
+                <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-weight: 500; color: #374151; font-size: 14px;">
+                  <span style="display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; background: rgba(236,72,153,0.1); color: #ec4899; border-radius: 50%; font-size: 12px;">✓</span>
                   Mobile Responsive Layouts
-                </li>
-                <li style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-weight: 500; color: #374151;">
-                  <span style="display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: rgba(236,72,153,0.1); color: #ec4899; border-radius: 50%; font-size: 14px;">✓</span>
-                  Customizable Styling Options
-                </li>
-                <li style="display: flex; align-items: center; gap: 12px; font-weight: 500; color: #374151;">
-                  <span style="display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: rgba(236,72,153,0.1); color: #ec4899; border-radius: 50%; font-size: 14px;">✓</span>
-                  Optimized for Fast Loading
                 </li>
               </ul>
               
               <a href="#" style="
                 display: inline-block;
-                padding: 12px 28px;
+                padding: 10px 24px;
                 background: #111827;
                 color: white;
                 text-decoration: none;
                 font-weight: 600;
                 border-radius: 10px;
-                transition: transform 0.2s;
+                font-size: 14px;
               ">Explore More</a>
             </div>
           </div>
@@ -822,9 +830,9 @@ onMounted(async () => {
 
     deviceManager: {
       devices: [
-        { name: 'Desktop', width: '' },
-        { name: 'Tablet', width: '768px', widthMedia: '768px' },
-        { name: 'Mobile', width: '375px', widthMedia: '480px' },
+        { id: 'desktop', name: 'Desktop', width: '' },
+        { id: 'tablet', name: 'Tablet', width: '768px', widthMedia: '992px' },
+        { id: 'mobile', name: 'Mobile', width: '320px', widthMedia: '480px' },
       ],
     },
   })
@@ -856,6 +864,13 @@ onMounted(async () => {
       body.style.padding = '0'
       body.style.overflowX = 'hidden'
     }
+    // Inject global responsive styles
+    editor.addStyle(`
+      * { box-sizing: border-box; }
+      img { max-width: 100%; height: auto; display: block; }
+      .gjs-dashed * { max-width: 100%; }
+      section, div { max-width: 100%; }
+    `)
   })
 })
 
@@ -983,6 +998,41 @@ onBeforeUnmount(() => {
   height: 20px;
   background: var(--color-border);
   margin: 0 6px;
+}
+
+/* ── Device Switcher ── */
+.device-switcher {
+  display: flex;
+  align-items: center;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 2px;
+  margin: 0 4px;
+}
+
+.device-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.device-btn:hover {
+  color: var(--color-text);
+}
+
+.device-btn.active {
+  background: var(--color-surface);
+  color: var(--color-accent);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* ── Body layout ── */
