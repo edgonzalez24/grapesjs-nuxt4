@@ -235,6 +235,39 @@ npm run dev
 
 ---
 
+## 🧱 Anatomy of a Section
+
+To maintain consistency and ensure responsiveness, all sections (blocks) follow this base structural pattern:
+
+```html
+<section data-gjs-name="Section Name" style="
+  width: 100%;
+  padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 40px);
+  background: #ffffff;
+  font-family: 'Inter', system-ui, sans-serif;
+">
+  <!-- Content Container (Centered) -->
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <h2 style="font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 800; ...">Heading</h2>
+    <p style="font-size: clamp(14px, 2vw, 18px); color: #6b7280; ...">Description</p>
+    
+    <!-- Column Layout -->
+    <div style="display: flex; flex-wrap: wrap; gap: 24px;">
+       <div style="flex: 1; min-width: 280px;">...</div>
+       <div style="flex: 1; min-width: 280px;">...</div>
+    </div>
+  </div>
+</section>
+```
+
+### Key Principles:
+- **Fluid Responsiveness**: Use of `clamp(min, pref, max)` for `font-size`, `padding`, and `gap`. This allows the design to adapt without sharp jumps.
+- **Typography**: Explicit application of `Inter` to ensure rendering matches the base design.
+- **Modern Layout**: Use of Flexbox with `gap` and `min-width` on columns for automatic responsive behavior.
+- **Editor-Friendly**: The `data-gjs-name` attribute makes it easier to navigate in the **Layers** panel of the editor.
+
+---
+
 ## 🛠️ Tech Stack
 
 | Layer | Technology |
