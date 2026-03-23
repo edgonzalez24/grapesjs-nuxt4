@@ -64,5 +64,14 @@
       "feature2Title": "Responsivo",
       "feature2Text": "Seu site ficará ótimo em todos os dispositivos automaticamente."
     }
+  },
+  "preview": {
+    "live": "AO VIVO",
+    "edit": "Voltar ao Editor",
+    "dashboard": "Painel",
+    "noContent": "Ainda sem conteúdo",
+    "noContentSubtitle": "Este site não possui conteúdo para exibir. Comece a construí-lo no editor.",
+    "openEditor": "Abrir Editor",
+    "seoDescription": "Conheça {siteName}, construído com GrapesJS and Nuxt."
   }
 }

@@ -64,5 +64,14 @@
       "feature2Title": "Responsive",
       "feature2Text": "Your website will look great on all devices automatically."
     }
+  },
+  "preview": {
+    "live": "LIVE",
+    "edit": "Back to Editor",
+    "dashboard": "Dashboard",
+    "noContent": "No Content Yet",
+    "noContentSubtitle": "This site doesn't have any content to display. Start building it in the editor.",
+    "openEditor": "Open Editor",
+    "seoDescription": "Experience {siteName}, built with GrapesJS and Nuxt."
   }
 }
