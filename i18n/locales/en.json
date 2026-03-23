@@ -27,6 +27,7 @@
     "multiCols3": "Multi Columns (3)",
     "textContent": "Text Content",
     "imageText": "Image & Text",
+    "carouselSection": "Carousel Section",
     "categories": {
       "sections": "Sections",
       "basic": "Basic"
