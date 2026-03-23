@@ -170,6 +170,9 @@ export function useGrapesEditor(siteId: string) {
         locale: locale.value,
         detectLocale: false,
       },
+      parser: {
+        optionsHtml: { allowScripts: true },
+      },
     })
 
     registerBlocks(editor, t)

@@ -436,142 +436,272 @@ export function registerBlocks(editor: Editor, t: (key: string) => string) {
       <circle cx="25" cy="34" r="1.5" fill="#6366f1" opacity="0.3"/>
     </svg>`,
     content: `
-      <section style="
-        width: 100%; padding: clamp(40px, 8vw, 80px) 0;
-        background: #f9fafb;
+      <section data-gjs-type="carousel-section" class="vueper-slider-section" style="
+        width: 100%; padding: 100px 0;
+        background: linear-gradient(135deg, #f8f9ff 0%, #f1f3fd 100%);
         font-family: 'Inter', system-ui, sans-serif;
         overflow: hidden;
       ">
-        <div style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+        <div style="max-width: 1100px; margin: 0 auto; padding: 0 20px; text-align: center; margin-bottom: 60px;">
           <h2 style="
-            text-align: center;
-            font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 800;
-            color: #111827; margin: 0 0 12px;
-            letter-spacing: -0.02em;
-          ">What Our Clients Say</h2>
+            font-size: clamp(2rem, 5vw, 3rem); font-weight: 900;
+            color: #1e1b4b; margin: 0 0 16px;
+            letter-spacing: -0.04em;
+          ">Wall of Love</h2>
+          <div style="width: 60px; height: 4px; background: #6366f1; margin: 0 auto 24px; border-radius: 2px;"></div>
           <p style="
-            text-align: center; color: #6b7280;
-            font-size: clamp(14px, 2vw, 17px); margin: 0 0 48px;
-            max-width: 600px; margin-left: auto; margin-right: auto;
-          ">Discover why thousands of users love building their presence with us.</p>
+            color: #636e81; font-size: clamp(16px, 2vw, 19px);
+            max-width: 600px; margin: 0 auto; line-height: 1.6;
+          ">Join thousands of satisfied users who have transformed their digital presence with our intuitive platform.</p>
         </div>
 
-        <!-- Carousel Viewport -->
-        <div style="
+        <div class="vueper-viewport" style="
           position: relative;
           width: 100%;
-          overflow: hidden;
+          padding: 20px 0 60px;
+          cursor: grab;
+          user-select: none;
         ">
-          <div style="
+          <div class="vueper-track" style="
             display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            gap: 24px;
-            padding: 20px 40px 40px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform;
+            gap: 30px;
+            padding: 0 15%;
           ">
             <!-- Testimonial 1 -->
-            <div style="
-              flex: 0 0 clamp(280px, 80vw, 350px);
-              scroll-snap-align: center;
-              background: #ffffff;
-              padding: 32px;
-              border-radius: 20px;
-              box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-              border: 1px solid #f3f4f6;
-              display: flex;
-              flex-direction: column;
-              justify-content: space-between;
+            <div class="vueper-slide" style="
+              flex: 0 0 400px;
+              max-width: 80vw;
+              transition: all 0.5s ease;
+              opacity: 0.4;
+              transform: scale(0.85);
             ">
-              <div>
-                <div style="color: #fbbf24; font-size: 20px; margin-bottom: 16px;">★★★★★</div>
-                <p style="font-size: 16px; line-height: 1.6; color: #374151; font-style: italic; margin-bottom: 24px;">
-                  "The editor is incredibly intuitive. I was able to build my professional landing page in less than an hour without writing a single line of code."
-                </p>
-              </div>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 44px; height: 44px; border-radius: 50%; background: #e0e7ff; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #4338ca;">JS</div>
+              <div style="
+                background: white;
+                padding: 40px;
+                border-radius: 24px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+                border: 1px solid rgba(255,255,255,0.8);
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+              ">
                 <div>
-                  <h4 style="margin: 0; font-size: 14px; font-weight: 700; color: #111827;">Sarah Jenkins</h4>
-                  <p style="margin: 0; font-size: 12px; color: #6b7280;">Marketing Director</p>
+                  <div style="color: #fbbf24; font-size: 24px; margin-bottom: 20px;">★★★★★</div>
+                  <p style="font-size: 18px; line-height: 1.7; color: #374151; font-style: italic; margin-bottom: 30px;">
+                    "The editor is incredibly intuitive. I was able to build my professional landing page in less than an hour."
+                  </p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 16px;">
+                  <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #a78bfa); display: flex; align-items: center; justify-content: center; font-weight: 800; color: white; font-size: 18px;">SJ</div>
+                  <div>
+                    <h4 style="margin: 0; font-size: 16px; font-weight: 700; color: #1e1b4b;">Sarah Jenkins</h4>
+                    <p style="margin: 0; font-size: 14px; color: #8892a4;">Marketing Director</p>
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- Testimonial 2 -->
-            <div style="
-              flex: 0 0 clamp(280px, 80vw, 350px);
-              scroll-snap-align: center;
-              background: #ffffff;
-              padding: 32px;
-              border-radius: 20px;
-              box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-              border: 1px solid #f3f4f6;
-              display: flex;
-              flex-direction: column;
-              justify-content: space-between;
+            <div class="vueper-slide active" style="
+              flex: 0 0 400px;
+              max-width: 80vw;
+              transition: all 0.5s ease;
+              opacity: 1;
+              transform: scale(1);
             ">
-              <div>
-                <div style="color: #fbbf24; font-size: 20px; margin-bottom: 16px;">★★★★★</div>
-                <p style="font-size: 16px; line-height: 1.6; color: #374151; font-style: italic; margin-bottom: 24px;">
-                  "Outstanding performance and flexibility. The pre-built blocks are beautifully designed and easy to customize to match our brand."
-                </p>
-              </div>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 44px; height: 44px; border-radius: 50%; background: #dcfce7; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #15803d;">MA</div>
+            <div style="
+                background: white;
+                padding: 40px;
+                border-radius: 24px;
+                box-shadow: 0 30px 60px rgba(99, 102, 241, 0.15);
+                border: 1px solid #eef2ff;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                position: relative;
+              ">
+                <div style="position: absolute; top: 20px; right: 30px; font-size: 60px; color: #6366f1; opacity: 0.1; font-family: serif;">"</div>
                 <div>
-                  <h4 style="margin: 0; font-size: 14px; font-weight: 700; color: #111827;">Marcus Aurelio</h4>
-                  <p style="margin: 0; font-size: 12px; color: #6b7280;">Startup Founder</p>
+                  <div style="color: #fbbf24; font-size: 24px; margin-bottom: 20px;">★★★★★</div>
+                  <p style="font-size: 18px; line-height: 1.7; color: #374151; font-style: italic; margin-bottom: 30px;">
+                    "Outstanding performance and flexibility. The pre-built blocks are beautifully designed and easy to customize."
+                  </p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 16px;">
+                  <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #34d399, #059669); display: flex; align-items: center; justify-content: center; font-weight: 800; color: white; font-size: 18px;">MA</div>
+                  <div>
+                    <h4 style="margin: 0; font-size: 16px; font-weight: 700; color: #1e1b4b;">Marcus Aurelio</h4>
+                    <p style="margin: 0; font-size: 14px; color: #8892a4;">Startup Founder</p>
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- Testimonial 3 -->
-            <div style="
-              flex: 0 0 clamp(280px, 80vw, 350px);
-              scroll-snap-align: center;
-              background: #ffffff;
-              padding: 32px;
-              border-radius: 20px;
-              box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-              border: 1px solid #f3f4f6;
-              display: flex;
-              flex-direction: column;
-              justify-content: space-between;
+            <div class="vueper-slide" style="
+              flex: 0 0 400px;
+              max-width: 80vw;
+              transition: all 0.5s ease;
+              opacity: 0.4;
+              transform: scale(0.85);
             ">
-              <div>
-                <div style="color: #fbbf24; font-size: 20px; margin-bottom: 16px;">★★★★★</div>
-                <p style="font-size: 16px; line-height: 1.6; color: #374151; font-style: italic; margin-bottom: 24px;">
-                  "The best GrapesJS integration I've seen. Nuxt 4 makes it feel snappy and modern. Highly recommended for any serious web project."
-                </p>
-              </div>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 44px; height: 44px; border-radius: 50%; background: #fee2e2; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #b91c1c;">LW</div>
+              <div style="
+                background: white;
+                padding: 40px;
+                border-radius: 24px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+                border: 1px solid rgba(255,255,255,0.8);
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+              ">
                 <div>
-                  <h4 style="margin: 0; font-size: 14px; font-weight: 700; color: #111827;">Laura White</h4>
-                  <p style="margin: 0; font-size: 12px; color: #6b7280;">UX Designer</p>
+                  <div style="color: #fbbf24; font-size: 24px; margin-bottom: 20px;">★★★★★</div>
+                  <p style="font-size: 18px; line-height: 1.7; color: #374151; font-style: italic; margin-bottom: 30px;">
+                    "The best GrapesJS integration I've seen. Nuxt 4 makes it feel snappy and modern. Highly recommended."
+                  </p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 16px;">
+                  <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #f87171, #dc2626); display: flex; align-items: center; justify-content: center; font-weight: 800; color: white; font-size: 18px;">LW</div>
+                  <div>
+                    <h4 style="margin: 0; font-size: 16px; font-weight: 700; color: #1e1b4b;">Laura White</h4>
+                    <p style="margin: 0; font-size: 14px; color: #8892a4;">UX Designer</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <!-- Controls -->
+          <div class="vueper-arrows" style="position: absolute; top: 50%; left: 0; width: 100%; display: flex; justify-content: space-between; padding: 0 5%; pointer-events: none; transform: translateY(-50%);">
+            <button class="vueper-arrow prev" style="width: 44px; height: 44px; border-radius: 50%; background: white; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; pointer-events: auto; display: flex; align-items: center; justify-content: center; color: #1e1b4b;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button class="vueper-arrow next" style="width: 44px; height: 44px; border-radius: 50%; background: white; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; pointer-events: auto; display: flex; align-items: center; justify-content: center; color: #1e1b4b;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
           
-          <!-- Indicators -->
-          <div style="display: flex; justify-content: center; gap: 8px; margin-top: -10px;">
-            <div style="width: 8px; height: 8px; border-radius: 50%; background: #6366f1;"></div>
-            <div style="width: 8px; height: 8px; border-radius: 50%; background: #e5e7eb;"></div>
-            <div style="width: 8px; height: 8px; border-radius: 50%; background: #e5e7eb;"></div>
+          <div class="vueper-bullets" style="display: flex; justify-content: center; gap: 10px; margin-top: 40px;">
+            <div class="bullet active" style="width: 30px; height: 6px; border-radius: 3px; background: #6366f1; cursor: pointer; transition: all 0.3s ease;"></div>
+            <div class="bullet" style="width: 10px; height: 6px; border-radius: 3px; background: #cbd5e1; cursor: pointer; transition: all 0.3s ease;"></div>
+            <div class="bullet" style="width: 10px; height: 6px; border-radius: 3px; background: #cbd5e1; cursor: pointer; transition: all 0.3s ease;"></div>
           </div>
         </div>
         
         <style>
-          /* Hide scrollbar for Chrome, Safari and Opera */
-          .gjs-dashed *::-webkit-scrollbar {
-            display: none;
+          .vueper-viewport.grabbing { cursor: grabbing; }
+          .vueper-slide.active { opacity: 1 !important; transform: scale(1) !important; }
+          .vueper-slide.active div { box-shadow: 0 30px 60px rgba(99, 102, 241, 0.2) !important; }
+          .vueper-arrow:hover { background: #6366f1 !important; color: white !important; transform: scale(1.1); transition: all 0.2s; }
+          @media (max-width: 768px) {
+            .vueper-track { padding: 0 5% !important; }
+            .vueper-slide { flex: 0 0 300px !important; }
           }
         </style>
+
+        <script>
+          (function() {
+            const container = document.querySelector('.vueper-slider-section');
+            if (!container) return;
+            const track = container.querySelector('.vueper-track');
+            const slides = container.querySelectorAll('.vueper-slide');
+            const bullets = container.querySelectorAll('.bullet');
+            const nextBtn = container.querySelector('.vueper-arrow.next');
+            const prevBtn = container.querySelector('.vueper-arrow.prev');
+            const viewport = container.querySelector('.vueper-viewport');
+
+            if (!track || !slides.length) return;
+
+            let currentIndex = 1;
+            let startPos = 0;
+            let isDragging = false;
+            let currentTranslate = 0;
+            let prevTranslate = 0;
+
+            function updateUI() {
+              slides.forEach(function(s, i) {
+                s.classList.toggle('active', i === currentIndex);
+              });
+              bullets.forEach(function(b, i) {
+                const isActive = i === currentIndex;
+                b.style.width = isActive ? '30px' : '10px';
+                b.style.background = isActive ? '#6366f1' : '#cbd5e1';
+              });
+              
+              const slideWidth = slides[0].offsetWidth + 30; // 30 is gap
+              const offset = (viewport.offsetWidth - slides[0].offsetWidth) / 2;
+              currentTranslate = -currentIndex * slideWidth + offset;
+              prevTranslate = currentTranslate;
+              track.style.transform = 'translateX(' + currentTranslate + 'px)';
+            }
+
+            // Initial position with a bit more delay to ensure layout is ready
+            setTimeout(updateUI, 200);
+
+            function goTo(index) {
+              currentIndex = (index + slides.length) % slides.length;
+              updateUI();
+            }
+
+            nextBtn.onclick = function() { goTo(currentIndex + 1); };
+            prevBtn.onclick = function() { goTo(currentIndex - 1); };
+            
+            bullets.forEach(function(b, i) {
+              b.onclick = function() { goTo(i); };
+            });
+
+            // Drag support
+            viewport.onmousedown = dragStart;
+            viewport.ontouchstart = dragStart;
+            viewport.onmouseup = dragEnd;
+            viewport.ontouchend = dragEnd;
+            viewport.onmousemove = dragMove;
+            viewport.ontouchmove = dragMove;
+            viewport.onmouseleave = dragEnd;
+
+            function dragStart(e) {
+              isDragging = true;
+              viewport.classList.add('grabbing');
+              startPos = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+              track.style.transition = 'none';
+            }
+
+            function dragMove(e) {
+              if (!isDragging) return;
+              const currentPos = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+              const diff = currentPos - startPos;
+              track.style.transform = 'translateX(' + (prevTranslate + diff) + 'px)';
+            }
+
+            function dragEnd(e) {
+              if (!isDragging) return;
+              isDragging = false;
+              viewport.classList.remove('grabbing');
+              track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+              
+              const move = (e.type.includes('touch') ? e.changedTouches[0].clientX : e.clientX) - startPos;
+              if (move < -100) goTo(currentIndex + 1);
+              else if (move > 100) goTo(currentIndex - 1);
+              else updateUI();
+            }
+
+            // Auto-play
+            let autoPlayInterval = setInterval(function() { goTo(currentIndex + 1); }, 5000);
+            container.onmouseenter = function() { clearInterval(autoPlayInterval); };
+            container.onmouseleave = function() {
+              clearInterval(autoPlayInterval);
+              autoPlayInterval = setInterval(function() { goTo(currentIndex + 1); }, 5000);
+            };
+
+            window.addEventListener('resize', updateUI);
+          })();
+        </script>
       </section>
     `
   })

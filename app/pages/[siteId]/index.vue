@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from '#imports'
+import { useI18n, onMounted, nextTick } from '#imports'
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
@@ -96,6 +96,29 @@ function goEdit() {
 function goHome() {
   router.push('/')
 }
+
+onMounted(() => {
+  // Execute scripts within the v-html content
+  const executeScripts = () => {
+    const container = document.querySelector('.preview-content')
+    if (!container) return
+    const scripts = container.querySelectorAll('script')
+    scripts.forEach((oldScript) => {
+      const newScript = document.createElement('script')
+      Array.from(oldScript.attributes).forEach((attr) =>
+        newScript.setAttribute(attr.name, attr.value)
+      )
+      newScript.appendChild(document.createTextNode(oldScript.innerHTML))
+      oldScript.parentNode?.replaceChild(newScript, oldScript)
+    })
+  }
+
+  // Watch for changes in the content to re-execute scripts if needed
+  watch(previewHtml, async () => {
+    await nextTick()
+    executeScripts()
+  }, { immediate: true })
+})
 </script>
 
 <style scoped>
