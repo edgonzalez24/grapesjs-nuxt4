@@ -3,7 +3,7 @@
     <!-- ── Top Navbar ── -->
     <header class="editor-navbar">
       <div class="navbar-brand">
-        <button class="btn-home" @click="goHome" title="Back to dashboard">
+        <button class="btn-home" @click="goHome" :title="$t('editor.back')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
             <polyline points="9 22 9 12 15 12 15 22" />
@@ -15,26 +15,30 @@
       </div>
 
       <div class="navbar-actions">
-        <button class="action-btn" title="Undo" @click="undo">
+        <LanguageSelector />
+        
+        <div class="divider-v" />
+
+        <button class="action-btn" :title="$t('editor.undo')" @click="undo">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 7v6h6" />
             <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13" />
           </svg>
-          Undo
+          {{ $t('editor.undo') }}
         </button>
-        <button class="action-btn" title="Redo" @click="redo">
+        <button class="action-btn" :title="$t('editor.redo')" @click="redo">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 7v6h-6" />
             <path d="M3 17a9 9 0 019-9 9 9 0 016 2.3l3 2.7" />
           </svg>
-          Redo
+          {{ $t('editor.redo') }}
         </button>
 
         <div class="divider-v" />
 
         <div class="device-switcher">
           <button class="device-btn" :class="{ active: currentDevice === 'desktop' }" @click="setDevice('desktop')"
-            title="Desktop View">
+            :title="$t('editor.desktop')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
               <line x1="8" y1="21" x2="16" y2="21" />
@@ -42,14 +46,14 @@
             </svg>
           </button>
           <button class="device-btn" :class="{ active: currentDevice === 'tablet' }" @click="setDevice('tablet')"
-            title="Tablet View">
+            :title="$t('editor.tablet')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
               <line x1="12" y1="18" x2="12.01" y2="18" />
             </svg>
           </button>
           <button class="device-btn" :class="{ active: currentDevice === 'mobile' }" @click="setDevice('mobile')"
-            title="Mobile View">
+            :title="$t('editor.mobile')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
               <line x1="12" y1="18" x2="12.01" y2="18" />
@@ -65,14 +69,14 @@
             <path d="M19 6l-1 14H6L5 6" />
             <path d="M10 11v6M14 11v6" />
           </svg>
-          Clear
+          {{ $t('editor.clear') }}
         </button>
         <button class="action-btn accent" @click="openPreview">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
             <circle cx="12" cy="12" r="3" />
           </svg>
-          Preview
+          {{ $t('editor.preview') }}
         </button>
       </div>
     </header>
@@ -88,7 +92,7 @@
             <rect x="3" y="14" width="7" height="7" />
             <rect x="14" y="14" width="7" height="7" />
           </svg>
-          Blocks
+          {{ $t('editor.blocks') }}
         </div>
         <div id="gjs-blocks" class="blocks-container" />
       </aside>
@@ -105,7 +109,7 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
-            Styles
+            {{ $t('editor.styles') }}
           </button>
           <button class="tab-btn" :class="{ active: activeRightTab === 'traits' }" @click="activeRightTab = 'traits'">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -116,7 +120,7 @@
               <line x1="3" y1="12" x2="3.01" y2="12" />
               <line x1="3" y1="18" x2="3.01" y2="18" />
             </svg>
-            Traits
+            {{ $t('editor.traits') }}
           </button>
           <button class="tab-btn" :class="{ active: activeRightTab === 'layers' }" @click="activeRightTab = 'layers'">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -124,7 +128,7 @@
               <polyline points="2 17 12 22 22 17" />
               <polyline points="2 12 12 17 22 12" />
             </svg>
-            Layers
+            {{ $t('editor.layers') }}
           </button>
         </div>
         <div id="gjs-styles" class="panel-pane" :class="{ hidden: activeRightTab !== 'styles' }" />
@@ -136,7 +140,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref, computed } from 'vue'
+import { onMounted, onBeforeUnmount, ref, computed, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useSupabase } from '~/utils/supabase'
 
@@ -187,10 +191,12 @@ function scheduleSave() {
 }
 
 // ─── Helpers ─────────────────────────────────────────────
+const { t, locale } = useI18n()
+
 const undo = () => editor?.UndoManager.undo()
 const redo = () => editor?.UndoManager.redo()
 const clearCanvas = () => {
-  if (editor && confirm('Clear the canvas? This cannot be undone.')) {
+  if (editor && confirm(t('editor.clearConfirm'))) {
     editor.DomComponents.clear()
     editor.CssComposer.clear()
     // Persist cleared state to API
@@ -216,8 +222,8 @@ function registerBlocks(editor: any) {
 
   // ── 1. Text & Banner ──────────────────────────────────
   bm.add('text-banner', {
-    label: 'Text & Banner',
-    category: 'Sections',
+    label: t('blocks.textBanner'),
+    category: t('blocks.categories.sections'),
     media: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="40" height="40" rx="6" fill="#6c63ff" opacity="0.15"/>
       <rect x="4" y="8" width="32" height="18" rx="3" fill="#6c63ff" opacity="0.5"/>
@@ -322,8 +328,8 @@ function registerBlocks(editor: any) {
 
   // ── 2. Multi Columns — 2 cols ──────────────────────────
   bm.add('multi-cols-2', {
-    label: 'Multi Cols (2)',
-    category: 'Sections',
+    label: t('blocks.multiCols2'),
+    category: t('blocks.categories.sections'),
     media: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="40" height="40" rx="6" fill="#34d399" opacity="0.1"/>
       <rect x="4" y="10" width="14" height="20" rx="3" fill="#34d399" opacity="0.5"/>
@@ -408,8 +414,8 @@ function registerBlocks(editor: any) {
 
   // ── 3. Multi Columns — 3 cols ──────────────────────────
   bm.add('multi-cols-3', {
-    label: 'Multi Cols (3)',
-    category: 'Sections',
+    label: t('blocks.multiCols3'),
+    category: t('blocks.categories.sections'),
     media: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="40" height="40" rx="6" fill="#fbbf24" opacity="0.1"/>
       <rect x="4" y="10" width="8" height="20" rx="2" fill="#fbbf24" opacity="0.6"/>
@@ -509,8 +515,8 @@ function registerBlocks(editor: any) {
 
   // ── 4. Text Content ────────────────────────────────────
   bm.add('text-content', {
-    label: 'Text Content',
-    category: 'Basic',
+    label: t('blocks.textContent'),
+    category: t('blocks.categories.basic'),
     media: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="40" height="40" rx="6" fill="#6c63ff" opacity="0.1"/>
       <rect x="6" y="10" width="28" height="4" rx="2" fill="#6c63ff" opacity="0.7"/>
@@ -540,8 +546,8 @@ function registerBlocks(editor: any) {
 
   // ── 5. Image & Text ────────────────────────────────────
   bm.add('image-text', {
-    label: 'Image & Text',
-    category: 'Sections',
+    label: t('blocks.imageText'),
+    category: t('blocks.categories.sections'),
     media: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="40" height="40" rx="6" fill="#ec4899" opacity="0.1"/>
       <rect x="4" y="10" width="14" height="20" rx="2" fill="#ec4899" opacity="0.5"/>
@@ -634,87 +640,96 @@ function registerBlocks(editor: any) {
   })
 }
 
-const DEFAULT_TEMPLATE = `
-  <section style="
-    width: 100%;
-    padding: 80px 40px;
-    background: #ffffff;
-    font-family: 'Inter', system-ui, sans-serif;
-  ">
-    <h2 style="
-      text-align: center;
-      font-size: 2.2rem; font-weight: 800;
-      color: #1e1b4b; margin: 0 0 16px;
-      letter-spacing: -0.02em;
-    ">Bienvenido a tu sitio</h2>
-    <p style="
-      text-align: center; color: #6b7280;
-      font-size: 18px; margin: 0 0 64px;
-      max-width: 600px; margin-left: auto; margin-right: auto;
-      line-height: 1.6;
-    ">Comienza editando este diseño predeterminado de dos columnas. Puedes arrastrar nuevos bloques desde el panel izquierdo.</p>
-
-    <div style="
-      display: flex;
-      gap: 32px;
-      max-width: 1100px;
-      margin: 0 auto;
-      flex-wrap: wrap;
+function getDefaultTemplate() {
+  return `
+    <section style="
+      width: 100%;
+      padding: 80px 40px;
+      background: #ffffff;
+      font-family: 'Inter', system-ui, sans-serif;
     ">
-      <!-- Column 1 -->
-      <div style="
-        flex: 1; min-width: 300px;
-        padding: 40px;
-        background: #f8fbff;
-        border-radius: 16px;
-        border: 1px solid #e2e8f0;
-        transition: transform 0.2s;
-      ">
-        <div style="
-          width: 56px; height: 56px; border-radius: 14px;
-          background: linear-gradient(135deg, #6c63ff, #a78bfa);
-          display: flex; align-items: center; justify-content: center;
-          font-size: 24px; margin-bottom: 24px;
-          box-shadow: 0 8px 16px rgba(108, 99, 255, 0.2);
-        ">✨</div>
-        <h3 style="
-          font-size: 1.4rem; font-weight: 700;
-          color: #1e1b4b; margin: 0 0 14px;
-        ">Diseño Flexible</h3>
-        <p style="
-          font-size: 16px; line-height: 1.7;
-          color: #4b5563; margin: 0;
-        ">Este es un bloque de columna predeterminado. Puedes cambiar los colores, fuentes y espaciado usando el panel de estilos a la derecha.</p>
-      </div>
+      <h2 style="
+        text-align: center;
+        font-size: 2.2rem; font-weight: 800;
+        color: #1e1b4b; margin: 0 0 16px;
+        letter-spacing: -0.02em;
+      ">${t('editor.defaultTemplate.title')}</h2>
+      <p style="
+        text-align: center; color: #6b7280;
+        font-size: 18px; margin: 0 0 64px;
+        max-width: 600px; margin-left: auto; margin-right: auto;
+        line-height: 1.6;
+      ">${t('editor.defaultTemplate.subtitle')}</p>
 
-      <!-- Column 2 -->
       <div style="
-        flex: 1; min-width: 300px;
-        padding: 40px;
-        background: #f8fbff;
-        border-radius: 16px;
-        border: 1px solid #e2e8f0;
-        transition: transform 0.2s;
+        display: flex;
+        gap: 32px;
+        max-width: 1100px;
+        margin: 0 auto;
+        flex-wrap: wrap;
       ">
+        <!-- Column 1 -->
         <div style="
-          width: 56px; height: 56px; border-radius: 14px;
-          background: linear-gradient(135deg, #34d399, #059669);
-          display: flex; align-items: center; justify-content: center;
-          font-size: 24px; margin-bottom: 24px;
-          box-shadow: 0 8px 16px rgba(52, 211, 153, 0.2);
-        ">🚀</div>
-        <h3 style="
-          font-size: 1.4rem; font-weight: 700;
-          color: #1e1b4b; margin: 0 0 14px;
-        ">Listo para Publicar</h3>
-        <p style="
-          font-size: 16px; line-height: 1.7;
-          color: #4b5563; margin: 0;
-        ">Una vez que termines de editar, puedes previsualizar tu sitio y ver cómo se adapta a dispositivos móviles automáticamente.</p>
+          flex: 1; min-width: 300px;
+          padding: 40px;
+          background: #f8fbff;
+          border-radius: 16px;
+          border: 1px solid #e2e8f0;
+          transition: transform 0.2s;
+        ">
+          <div style="
+            width: 56px; height: 56px; border-radius: 14px;
+            background: linear-gradient(135deg, #6c63ff, #a78bfa);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; margin-bottom: 24px;
+            box-shadow: 0 8px 16px rgba(108, 99, 255, 0.2);
+          ">✨</div>
+          <h3 style="
+            font-size: 1.4rem; font-weight: 700;
+            color: #1e1b4b; margin: 0 0 14px;
+          ">${t('editor.defaultTemplate.feature1Title')}</h3>
+          <p style="
+            font-size: 16px; line-height: 1.7;
+            color: #4b5563; margin: 0;
+          ">${t('editor.defaultTemplate.feature1Text')}</p>
+        </div>
+
+        <!-- Column 2 -->
+        <div style="
+          flex: 1; min-width: 300px;
+          padding: 40px;
+          background: #f8fbff;
+          border-radius: 16px;
+          border: 1px solid #e2e8f0;
+          transition: transform 0.2s;
+        ">
+          <div style="
+            width: 56px; height: 56px; border-radius: 14px;
+            background: linear-gradient(135deg, #34d399, #059669);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; margin-bottom: 24px;
+            box-shadow: 0 8px 16px rgba(52, 211, 153, 0.2);
+          ">🚀</div>
+          <h3 style="
+            font-size: 1.4rem; font-weight: 700;
+            color: #1e1b4b; margin: 0 0 14px;
+          ">${t('editor.defaultTemplate.feature2Title')}</h3>
+          <p style="
+            font-size: 16px; line-height: 1.7;
+            color: #4b5563; margin: 0;
+          ">${t('editor.defaultTemplate.feature2Text')}</p>
+        </div>
       </div>
-    </div>
-  </section>
-`
+    </section>
+  `
+}
+
+// Watch for locale changes to update GrapesJS internal language
+watch(locale, (newLocale) => {
+  if (editor) {
+    editor.setLocale(newLocale)
+  }
+})
 
 // ─── Editor Init ─────────────────────────────────────────
 onMounted(async () => {
@@ -773,7 +788,7 @@ onMounted(async () => {
       appendTo: '#gjs-styles',
       sectors: [
         {
-          name: 'Layout',
+          name: t('editor.sectors.layout'),
           open: true,
           properties: [
             'display',
@@ -786,22 +801,22 @@ onMounted(async () => {
           ],
         },
         {
-          name: 'Dimension',
+          name: t('editor.sectors.dimension'),
           open: false,
           properties: ['width', 'height', 'min-height', 'max-width'],
         },
         {
-          name: 'Typography',
+          name: t('editor.sectors.typography'),
           open: false,
           properties: ['font-family', 'font-size', 'font-weight', 'color', 'line-height', 'text-align'],
         },
         {
-          name: 'Decorations',
+          name: t('editor.sectors.decorations'),
           open: false,
           properties: ['background-color', 'border-radius', 'box-shadow', 'opacity'],
         },
         {
-          name: 'Background',
+          name: t('editor.sectors.background'),
           open: false,
           properties: [
             'background-image',
@@ -830,10 +845,15 @@ onMounted(async () => {
 
     deviceManager: {
       devices: [
-        { id: 'desktop', name: 'Desktop', width: '' },
-        { id: 'tablet', name: 'Tablet', width: '768px', widthMedia: '992px' },
-        { id: 'mobile', name: 'Mobile', width: '320px', widthMedia: '480px' },
+        { id: 'desktop', name: t('editor.desktop'), width: '' },
+        { id: 'tablet', name: t('editor.tablet'), width: '768px', widthMedia: '992px' },
+        { id: 'mobile', name: t('editor.mobile'), width: '320px', widthMedia: '480px' },
       ],
+    },
+
+    i18n: {
+      locale: locale.value,
+      detectLocale: false,
     },
   })
 
@@ -849,7 +869,7 @@ onMounted(async () => {
     if (content.css) editor.setStyle(content.css)
   } else {
     // New site: load default template
-    editor.setComponents(DEFAULT_TEMPLATE)
+    editor.setComponents(getDefaultTemplate())
   }
 
 

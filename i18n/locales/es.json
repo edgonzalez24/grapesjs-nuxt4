@@ -1,0 +1,68 @@
+{
+  "dashboard": {
+    "title": "Constructor de Páginas",
+    "subtitle": "GrapesJS + Nuxt 4",
+    "newWebsite": "Nuevo Sitio Web",
+    "noWebsites": "Aún no hay sitios web",
+    "noWebsitesTagline": "Crea tu primer sitio web para empezar a construir con GrapesJS.",
+    "createWebsite": "Crear Sitio Web",
+    "created": "Creado el {date}",
+    "edit": "Editar",
+    "preview": "Vista Previa",
+    "deleteWebsite": "Eliminar Sitio Web",
+    "modalDescription": "Elige un nombre para tu sitio web. Se generará un slug de URL automáticamente.",
+    "websiteName": "Nombre del Sitio Web",
+    "placeholder": "ej. Mi Portafolio",
+    "url": "URL: /",
+    "cancel": "Cancelar",
+    "creating": "Creando...",
+    "deleteConfirm": "¿Estás seguro de que quieres eliminar {name}?",
+    "deleteWarning": "Todo el contenido se eliminará permanentemente.",
+    "deleting": "Eliminando...",
+    "delete": "Eliminar"
+  },
+  "blocks": {
+    "textBanner": "Texto y Banner",
+    "multiCols2": "Multi Col (2)",
+    "multiCols3": "Multi Col (3)",
+    "textContent": "Contenido de Texto",
+    "imageText": "Imagen y Texto",
+    "categories": {
+      "sections": "Secciones",
+      "basic": "Básico"
+    }
+  },
+  "editor": {
+    "back": "Volver al tablero",
+    "undo": "Deshacer",
+    "redo": "Rehacer",
+    "desktop": "Vista de Escritorio",
+    "tablet": "Vista de Tablet",
+    "mobile": "Vista Móvil",
+    "clear": "Limpiar",
+    "preview": "Vista Previa",
+    "blocks": "Bloques",
+    "styles": "Estilos",
+    "traits": "Rasgos",
+    "layers": "Capas",
+    "clearConfirm": "¿Limpiar el lienzo? Esto no se puede deshacer.",
+    "sections": "Secciones",
+    "basic": "Básico",
+    "sectors": {
+      "layout": "Diseño",
+      "dimension": "Dimensión",
+      "typography": "Tipografía",
+      "background": "Fondo",
+      "decorations": "Decoraciones",
+      "extra": "Extra"
+    },
+    "defaultTemplate": {
+      "title": "Bienvenido a tu nuevo sitio web",
+      "subtitle": "Esta es una plantilla predeterminada para ayudarte a comenzar. Puedes editar cualquier elemento haciendo clic en él, o arrastrar nuevos bloques desde el panel izquierdo.",
+      "feature1Title": "Personalizable",
+      "feature1Text": "Cada elemento se puede diseñar y posicionar según tus necesidades.",
+      "feature2Title": "Responsivo",
+      "feature2Text": "Tu sitio web se verá genial en todos los dispositivos automáticamente."
+    }
+  }
+}

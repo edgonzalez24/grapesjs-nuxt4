@@ -1,0 +1,68 @@
+{
+  "dashboard": {
+    "title": "Page Builder",
+    "subtitle": "GrapesJS + Nuxt 4",
+    "newWebsite": "New Website",
+    "noWebsites": "No websites yet",
+    "noWebsitesTagline": "Create your first website to get started building with GrapesJS.",
+    "createWebsite": "Create Website",
+    "created": "Created {date}",
+    "edit": "Edit",
+    "preview": "Preview",
+    "deleteWebsite": "Delete Website",
+    "modalDescription": "Choose a name for your website. A URL slug will be generated automatically.",
+    "websiteName": "Website Name",
+    "placeholder": "e.g. My Portfolio",
+    "url": "URL: /",
+    "cancel": "Cancel",
+    "creating": "Creating...",
+    "deleteConfirm": "Are you sure you want to delete {name}?",
+    "deleteWarning": "All content will be permanently removed.",
+    "deleting": "Deleting...",
+    "delete": "Delete"
+  },
+  "blocks": {
+    "textBanner": "Text & Banner",
+    "multiCols2": "Multi Columns (2)",
+    "multiCols3": "Multi Columns (3)",
+    "textContent": "Text Content",
+    "imageText": "Image & Text",
+    "categories": {
+      "sections": "Sections",
+      "basic": "Basic"
+    }
+  },
+  "editor": {
+    "back": "Back to dashboard",
+    "undo": "Undo",
+    "redo": "Redo",
+    "desktop": "Desktop View",
+    "tablet": "Tablet View",
+    "mobile": "Mobile View",
+    "clear": "Clear",
+    "preview": "Preview",
+    "blocks": "Blocks",
+    "styles": "Styles",
+    "traits": "Traits",
+    "layers": "Layers",
+    "clearConfirm": "Clear the canvas? This cannot be undone.",
+    "sections": "Sections",
+    "basic": "Basic",
+    "sectors": {
+      "layout": "Layout",
+      "dimension": "Dimension",
+      "typography": "Typography",
+      "background": "Background",
+      "decorations": "Decorations",
+      "extra": "Extra"
+    },
+    "defaultTemplate": {
+      "title": "Welcome to your new website",
+      "subtitle": "This is a default template to help you get started. You can edit any element by clicking on it, or drag new blocks from the left panel.",
+      "feature1Title": "Customizable",
+      "feature1Text": "Every element can be styled and positioned according to your needs.",
+      "feature2Title": "Responsive",
+      "feature2Text": "Your website will look great on all devices automatically."
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "dashboard": {
+    "title": "Construtor de Páginas",
+    "subtitle": "GrapesJS + Nuxt 4",
+    "newWebsite": "Novo Site",
+    "noWebsites": "Ainda não há sites",
+    "noWebsitesTagline": "Crie seu primeiro site para começar a construir com GrapesJS.",
+    "createWebsite": "Criar Site",
+    "created": "Criado em {date}",
+    "edit": "Editar",
+    "preview": "Visualizar",
+    "deleteWebsite": "Excluir Site",
+    "modalDescription": "Escolha um nome para seu site. Um slug de URL será gerado automaticamente.",
+    "websiteName": "Nome do Site",
+    "placeholder": "ex. Meu Portfólio",
+    "url": "URL: /",
+    "cancel": "Cancelar",
+    "creating": "Criando...",
+    "deleteConfirm": "Tem certeza que deseja excluir {name}?",
+    "deleteWarning": "Todo o conteúdo será removido permanentemente.",
+    "deleting": "Excluindo...",
+    "delete": "Excluir"
+  },
+  "blocks": {
+    "textBanner": "Texto e Banner",
+    "multiCols2": "Multi Colunas (2)",
+    "multiCols3": "Multi Colunas (3)",
+    "textContent": "Conteúdo de Texto",
+    "imageText": "Imagem e Texto",
+    "categories": {
+      "sections": "Seções",
+      "basic": "Básico"
+    }
+  },
+  "editor": {
+    "back": "Voltar ao painel",
+    "undo": "Desfazer",
+    "redo": "Refazer",
+    "desktop": "Vista de Desktop",
+    "tablet": "Vista de Tablet",
+    "mobile": "Vista de Mobile",
+    "clear": "Limpar",
+    "preview": "Prévia",
+    "blocks": "Blocos",
+    "styles": "Estilos",
+    "traits": "Atributos",
+    "layers": "Camadas",
+    "clearConfirm": "Limpar a tela? Isso não pode ser desfeito.",
+    "sections": "Seções",
+    "basic": "Básico",
+    "sectors": {
+      "layout": "Layout",
+      "dimension": "Dimensão",
+      "typography": "Tipografía",
+      "background": "Fundo",
+      "decorations": "Decorações",
+      "extra": "Extra"
+    },
+    "defaultTemplate": {
+      "title": "Bem-vindo ao seu novo site",
+      "subtitle": "Este é um modelo padrão para ajudá-lo a começar. Você pode editar qualquer elemento clicando nele, ou arrastar novos blocos do painel esquerdo.",
+      "feature1Title": "Customizável",
+      "feature1Text": "Cada elemento pode ser customizado e posicionado de acordo com suas necessidades.",
+      "feature2Title": "Responsivo",
+      "feature2Text": "Seu site ficará ótimo em todos os dispositivos automaticamente."
+    }
+  }
+}

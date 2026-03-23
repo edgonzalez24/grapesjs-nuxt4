@@ -5,16 +5,19 @@
     <header class="dash-header">
       <div class="brand">
         <span class="brand-icon">🎨</span>
-        <span class="brand-name">Page Builder</span>
-        <span class="brand-badge">GrapesJS + Nuxt 4</span>
+        <span class="brand-name">{{ t('dashboard.title') }}</span>
+        <span class="brand-badge">{{ t('dashboard.subtitle') }}</span>
       </div>
-      <button class="btn-new" @click="showModal = true">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <line x1="12" y1="5" x2="12" y2="19" />
-          <line x1="5" y1="12" x2="19" y2="12" />
-        </svg>
-        New Website
-      </button>
+      <div class="header-actions">
+        <LanguageSelector />
+        <button class="btn-new" @click="showModal = true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          {{ t('dashboard.newWebsite') }}
+        </button>
+      </div>
     </header>
 
     <!-- Main content -->
@@ -22,9 +25,9 @@
       <!-- Empty state -->
       <div v-if="sites.length === 0" class="empty-state">
         <div class="empty-glyph">🌐</div>
-        <h2>No websites yet</h2>
-        <p>Create your first website to get started building with GrapesJS.</p>
-        <button class="btn-primary" @click="showModal = true">Create Website</button>
+        <h2>{{ t('dashboard.noWebsites') }}</h2>
+        <p>{{ t('dashboard.noWebsitesTagline') }}</p>
+        <button class="btn-primary" @click="showModal = true">{{ t('dashboard.createWebsite') }}</button>
       </div>
 
       <!-- Sites grid -->
@@ -39,7 +42,7 @@
           </div>
 
           <div class="card-date">
-            Created {{ formatDate(site.created_at) }}
+            {{ t('dashboard.created', { date: formatDate(site.created_at) }) }}
           </div>
 
           <div class="card-actions">
@@ -48,14 +51,14 @@
                 <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
                 <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
               </svg>
-              Edit
+              {{ t('dashboard.edit') }}
             </NuxtLink>
             <NuxtLink :to="`/${site.id}`" class="card-btn secondary">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                 <circle cx="12" cy="12" r="3" />
               </svg>
-              Preview
+              {{ t('dashboard.preview') }}
             </NuxtLink>
             <button class="card-btn danger" @click="confirmDelete(site)">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -73,22 +76,22 @@
     <Transition name="fade">
       <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
         <div class="modal">
-          <h2 class="modal-title">New Website</h2>
-          <p class="modal-desc">Choose a name for your website. A URL slug will be generated automatically.</p>
+          <h2 class="modal-title">{{ t('dashboard.newWebsite') }}</h2>
+          <p class="modal-desc">{{ t('dashboard.modalDescription') }}</p>
 
           <div class="field">
-            <label class="field-label">Website Name</label>
-            <input ref="nameInput" v-model="newName" class="field-input" placeholder="e.g. My Portfolio" maxlength="60"
-              @keydown.enter="handleCreate" @keydown.esc="closeModal" />
+            <label class="field-label">{{ t('dashboard.websiteName') }}</label>
+            <input ref="nameInput" v-model="newName" class="field-input" :placeholder="t('dashboard.placeholder')"
+              maxlength="60" @keydown.enter="handleCreate" @keydown.esc="closeModal" />
             <span v-if="newName" class="field-hint">
-              URL: /{{ slugPreview }}
+              {{ t('dashboard.url') }}{{ slugPreview }}
             </span>
           </div>
 
           <div class="modal-actions">
-            <button class="btn-cancel" @click="closeModal">Cancel</button>
+            <button class="btn-cancel" @click="closeModal">{{ t('dashboard.cancel') }}</button>
             <button class="btn-confirm" :disabled="!newName.trim() || isCreating" @click="handleCreate">
-              {{ isCreating ? 'Creating...' : 'Create Website' }}
+              {{ isCreating ? t('dashboard.creating') : t('dashboard.createWebsite') }}
             </button>
           </div>
         </div>
@@ -99,15 +102,16 @@
     <Transition name="fade">
       <div v-if="deleteTarget" class="modal-overlay" @click.self="deleteTarget = null">
         <div class="modal">
-          <h2 class="modal-title">Delete Website</h2>
+          <h2 class="modal-title">{{ t('dashboard.deleteWebsite') }}</h2>
           <p class="modal-desc">
-            Are you sure you want to delete <strong>{{ deleteTarget.name }}</strong>?
-            All content will be permanently removed.
+            {{ t('dashboard.deleteConfirm', { name: deleteTarget.name }) }}
+            {{ t('dashboard.deleteWarning') }}
           </p>
           <div class="modal-actions">
-            <button class="btn-cancel" :disabled="isDeleting" @click="deleteTarget = null">Cancel</button>
+            <button class="btn-cancel" :disabled="isDeleting" @click="deleteTarget = null">{{ t('dashboard.cancel') }}
+            </button>
             <button class="btn-danger" :disabled="isDeleting" @click="handleDelete">
-              {{ isDeleting ? 'Deleting...' : 'Delete' }}
+              {{ isDeleting ? t('dashboard.deleting') : t('dashboard.delete') }}
             </button>
           </div>
         </div>
@@ -119,6 +123,8 @@
 
 <script setup lang="ts">
 import type { Website } from '~/composables/useWebsites'
+
+const { t, locale } = useI18n()
 
 const { sites, refresh, createSite, deleteSite } = useWebsites()
 const showModal = ref(false)
@@ -182,7 +188,7 @@ async function handleDelete() {
 }
 
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+  return new Date(iso).toLocaleDateString(locale.value, { year: 'numeric', month: 'short', day: 'numeric' })
 }
 </script>
 
@@ -206,6 +212,12 @@ function formatDate(iso: string) {
   position: sticky;
   top: 0;
   z-index: 50;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .brand {

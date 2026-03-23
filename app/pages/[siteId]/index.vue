@@ -1,37 +1,39 @@
 <template>
   <div class="preview-page">
     <!-- Toolbar -->
-    <div class="preview-toolbar">
+    <header class="preview-toolbar">
       <div class="toolbar-left">
         <span class="logo-icon">🎨</span>
         <span class="toolbar-title">{{ siteName }}</span>
-        <span class="preview-badge">LIVE</span>
+        <span class="preview-badge">{{ t('preview.live') }}</span>
       </div>
       <div class="toolbar-right">
+        <LanguageSelector />
+        <div class="divider-v" />
         <button class="btn-edit" @click="goEdit">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
             <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
           </svg>
-          Edit
+          {{ t('preview.edit') }}
         </button>
         <button class="btn-back" @click="goHome">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
             <polyline points="9 22 9 12 15 12 15 22" />
           </svg>
-          Dashboard
+          {{ t('preview.dashboard') }}
         </button>
       </div>
-    </div>
+    </header>
 
     <!-- Canvas -->
     <div class="preview-canvas">
       <div v-if="!hasContent" class="empty-state">
         <div class="empty-icon">📄</div>
-        <h2>No content yet</h2>
-        <p>Open the editor and add some blocks to your page.</p>
-        <button class="btn-primary" @click="goEdit">Open Editor</button>
+        <h2>{{ t('preview.noContent') }}</h2>
+        <p>{{ t('preview.noContentSubtitle') }}</p>
+        <button class="btn-primary" @click="goEdit">{{ t('preview.openEditor') }}</button>
       </div>
 
       <div v-if="hasContent" class="preview-content" v-html="previewHtml" />
@@ -40,8 +42,10 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from '#imports'
 const route = useRoute()
 const router = useRouter()
+const { t } = useI18n()
 const siteId = computed(() => route.params.siteId as string)
 
 // SSR: fetch site content on the server
@@ -71,17 +75,17 @@ const url = useRequestURL()
 
 useSeoMeta({
   title: () => siteName.value,
-  description: () => `Web preview for ${siteName.value}. Created with GrapesJS and Nuxt 4.`,
+  description: () => t('preview.seoDescription', { siteName: siteName.value }),
   // OG
   ogTitle: () => siteName.value,
-  ogDescription: () => `Web preview for ${siteName.value}. Created with GrapesJS and Nuxt 4.`,
+  ogDescription: () => t('preview.seoDescription', { siteName: siteName.value }),
   ogImage: `${url.origin}/og-image.png`,
   ogUrl: () => url.href,
   ogType: 'website',
   // Twitter
   twitterCard: 'summary_large_image',
   twitterTitle: () => siteName.value,
-  twitterDescription: () => `Web preview for ${siteName.value}. Created with GrapesJS and Nuxt 4.`,
+  twitterDescription: () => t('preview.seoDescription', { siteName: siteName.value }),
   twitterImage: `${url.origin}/og-image.png`,
 })
 
@@ -146,7 +150,15 @@ function goHome() {
 
 .toolbar-right {
   display: flex;
+  align-items: center;
   gap: 8px;
+}
+
+.divider-v {
+  width: 1px;
+  height: 20px;
+  background: var(--color-border);
+  margin: 0 4px;
 }
 
 .btn-edit,

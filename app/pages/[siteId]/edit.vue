@@ -1,7 +1,7 @@
 <template>
   <div class="editor-page">
     <ClientOnly>
-      <GrapesEditor :site-id="siteId" />
+      <GrapesEditor :key="locale" :site-id="siteId" />
       <template #fallback>
         <div class="loading-screen">
           <div class="loading-inner">
@@ -19,7 +19,9 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from '#imports'
 const route = useRoute()
+const { locale } = useI18n()
 const siteId = computed(() => route.params.siteId as string)
 </script>
 
